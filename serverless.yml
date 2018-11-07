@@ -1,0 +1,22 @@
+service: contentful-watermark
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  timeout: 30
+
+functions:
+  watermark:
+    handler: handler.watermark
+
+    events:
+      - http:
+          path: /watermark
+          method: post
+    environment:
+      SPACE_ID: ${env:SPACE_ID}
+      CDA_ACCESS_TOKEN: ${env:CDA_ACCESS_TOKEN}
+      CMA_ACCESS_TOKEN: ${env:CMA_ACCESS_TOKEN}
+      WATERMARK_CONFIG_ID: ${env:WATERMARK_CONFIG_ID}
+plugins:
+  - serverless-offline
