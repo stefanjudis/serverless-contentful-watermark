@@ -4,6 +4,10 @@ A serverless function to create Contentful images with watermarks
 
 ![Example flow automatically creating a watermarked image](./example.gif)
 
+The way it works that you can configure webhooks in Contentful. A webhook that is sent all the time a new asset is published will hit and HTTP endpoint in AWS that triggers a Lambda function in this repository. This Lambda function will load the just published image "watermark it" and create a new asset with the marked image in the same Contentful space.
+
+![Webhook diagram showing Webhook triggering a serverless function, creating a marked image and uploading back to Contentful](./webhook-flow.jpeg)
+
 ## How to get started
 
 This project is built using the [serverless framework](https://www.serverless.com).
