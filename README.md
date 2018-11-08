@@ -6,7 +6,11 @@ A serverless function to create Contentful images with watermarks
 
 ## How to get started
 
-This project is built using the [serverless framework](https://www.serverless.com). You can find all the configuration needed for the function included in this project in the `serverless.yml`.
+This project is built using the [serverless framework](https://www.serverless.com).
+
+### Project structure
+
+You can find all the configuration needed for the function included in this project in the `serverless.yml`. The `serverless.yml` is the main configuration file defining functions and routes for API Gateway.
 
 ### Install all dependencies
 
@@ -29,7 +33,7 @@ export CMA_ACCESS_TOKEN=...
 export WATERMARK_CONFIG_ID=...
 ```
 
-Space ID, CDA and CMA access token are used to fetch and upload data and images.
+Space ID, CDA and CMA access token are used authorize with the Contentful APIs. You can find more information in the [Authentication docs](https://www.contentful.com/developers/docs/references/authentication/).
 
 #### The configuration content type
 
@@ -37,7 +41,9 @@ To keep this watermarker flexible the project relies on one entry stored in Cont
 
 ![Content type controlling the watermark generation](./watermark-type.jpg)
 
-`WATERMARK_CONFIG_ID` is used to fetch this one entry.
+Create a content type including to fields (`title` and `image`) in which `image` is reference to an asset. This asset will be the watermark logo that goes into every created asset.
+
+Then, create one entry. This entry acts a overall watermark configuration. The entry of the created entry needs to be set as `WATERMARK_CONFIG_ID` so that the function can fetch the linked asset.
 
 ### Spin up the local development mode
 
