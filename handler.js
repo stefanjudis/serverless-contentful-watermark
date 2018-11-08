@@ -27,7 +27,7 @@ const httpsify = url => url.replace('//', 'https://');
  * Prepend the watermarked symbol string to a string
  * @param {String} str
  */
-const addWatermarkString = str => `[WATERMARKED] ${str}`;
+const addWatermarkToString = str => `[WATERMARKED] ${str}`;
 
 /**
  * Format a proper response object ready to be used
@@ -166,7 +166,11 @@ module.exports.watermark = async event => {
     }
 
     if (
-      await getAsset({ fileName: addWatermarkString(fileName), width, height })
+      await getAsset({
+        fileName: addWatermarkToString(fileName),
+        width,
+        height
+      })
     ) {
       console.log('Skipped this hook... Watermark already exists.');
       return getResponseObject(200, 'Skipped - watermark already exists');
@@ -188,10 +192,10 @@ module.exports.watermark = async event => {
 
     // upload the watermarked result image back to contentful
     await uploadAsset({
-      title: addWatermarkString(title),
+      title: addWatermarkToString(title),
       contentType,
       description,
-      fileName: addWatermarkString(fileName),
+      fileName: addWatermarkToString(fileName),
       stream: bufferToStream(await watermarkedImage.getBufferAsync(Jimp.AUTO))
     });
 
